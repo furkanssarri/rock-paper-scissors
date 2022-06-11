@@ -1,19 +1,14 @@
 const elements = ["rock", "paper", "scissors"];
 // let computerSelection;
 
-function computerPlay() {
-   // computerSelection = elements[Math.floor(Math.random() * elements.length)];
-   // return computerSelection;
-   // console.log(computerSelection);
-   // playRound(computerSelection);
+// Let the computer select a random element from the elements array
+function computerPlay() { 
    return elements[Math.floor(Math.random() * elements.length)];
 }
 
-// console.log(computerSelection);
 
-// computerPlay()
-
-function playRound(playerSelection, computerSelection) {
+// Play one round of the game
+function playRound(playerSelection, computerSelection) { // Control the winners. Needs to be re-worked.
    if (computerSelection === "rock" && playerSelection === "scissors" 
    || computerSelection === "scissors" && playerSelection === "paper" 
    || computerSelection === "paper" && playerSelection === "rock") {
@@ -29,13 +24,15 @@ function playRound(playerSelection, computerSelection) {
    }
 }
 
-const playerSelection = prompt("select");
-// const computerSelection = computerPlay();
+
+
+
 
 function game() {
-   for (let i = 0; i < 5; i++) {
-      const computerSelection = computerPlay();
-      playRound(playerSelection,computerSelection);
+   for (let i = 0; i < 5; i++) { // Loop for 5 rounds of game
+      const playerSelection = prompt("select"); // Initialize the player selection for each round
+      const computerSelection = computerPlay(); // Initialize the computer selection for each round
+      playRound(playerSelection,computerSelection); // Play the game for 5 rounds
    }
 }
 
