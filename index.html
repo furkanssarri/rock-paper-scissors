@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="css/style.css">
+   <script src="js/app.js" defer></script>
    <title>Rock-Paper-Scissors</title>
 </head>
+
 <body>
-   
-   <script src="js/app.js"></script>
+   <header class="header">
+      <h1 class="heading-title">ROCK PAPER SCISSORS</h1>
+   </header>
+   <main class="main-content">
+      <div class="container">
+         <div class="play-ground">
+            <div class="desc-wrapper">
+               <h3 class="play-ground-header" id="roundResult">Make a selection</h3>
+               <p class="desc" id="roundDesc">First to score 5 points wins the game</p>
+            </div>
+            <!--Style upgrades will be implemented.-->
+            <div class="hands">
+               <div class="player-selection">?</div>
+               <div class="computer-selection">?</div>
+            </div>
+            <div class="scoreboard" id="scoreBoard">
+               <p class="player-score">Player score: <br>
+               0</p>
+               <p class="computer-score">Computer score: <br>
+                  0</p>
+            </div>
+            <!--Style upgrades will be implemented.-->
+            <div class="buttons">
+               <button class="game-button" name="rock">Rock</button>
+               <button class="game-button" name="paper">Paper</button>
+               <button class="game-button" name="scissors">Scissors</button>
+            </div>
+         </div>
+      </div>
+   </main>
+   <footer class="footer">
+      <div class="copyright">Furkan Sarı</div>
+   </footer>
+
 </body>
+
 </html>
