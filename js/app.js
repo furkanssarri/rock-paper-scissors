@@ -37,10 +37,10 @@ function playRound(playerSelection, computerSelection) { // Control the winners.
       console.log(`playRound -> Computer Selection: ${computerSelection}`);
       console.log(`playRound -> Player Selection: ${playerSelection}`);
       gameRound++; // TO BE MERGED
-      getHand(computerSelection, playerSelection); // TO BE MERGED
+      getHand(playerSelection, computerSelection); // TO BE MERGED
       roundWinner("computer"); // TO BE MERGED
-      roundStatus(computerSelection, playerSelection); // TO BE MERGED
-      winLose("computer", computerSelection, playerSelection); // TO BE MERGED
+      roundStatus(playerSelection, computerSelection); // TO BE MERGED
+      winLose("computer", playerSelection, computerSelection); // TO BE MERGED
       // console.log(`You lose, ${computerSelection} beats ${playerSelection}`);
    } else if (computerSelection === "scissors" && playerSelection === "rock"
       || computerSelection === "paper" && playerSelection === "scissors"
@@ -48,7 +48,7 @@ function playRound(playerSelection, computerSelection) { // Control the winners.
       console.log(`playRound -> Computer Selection: ${computerSelection}`);
       console.log(`playRound -> Player Selection: ${playerSelection}`);
       gameRound++; // TO BE MERGED
-      getHand(computerSelection, playerSelection); // TO BE MERGED
+      getHand(playerSelection, computerSelection); // TO BE MERGED
       roundWinner("player"); // TO BE MERGED
       roundStatus(playerSelection, computerSelection); // TO BE MERGED
       winLose("player", playerSelection, computerSelection) // TO BE MERGED
@@ -58,9 +58,9 @@ function playRound(playerSelection, computerSelection) { // Control the winners.
       || computerSelection === "scissors" && playerSelection === "scissors") {
       gameRound++;
       // console.log(`That's a tie. The computer selected ${computerSelection} and you selected ${playerSelection}.`);
-      getHand(computerSelection, playerSelection); // TO BE MERGED
+      getHand(playerSelection, computerSelection); // TO BE MERGED
       roundStatus(playerSelection, computerSelection); // TO BE MERGED
-      winLose("tie", computerSelection, playerSelection); // TO BE MERGED
+      winLose("tie", playerSelection, computerSelection); // TO BE MERGED
    }
 }
 
@@ -69,8 +69,8 @@ function playRound(playerSelection, computerSelection) { // Control the winners.
 function game(e, computerScore, playerScore) {
    let attr = e.target.getAttribute("name");
    const playerSelection = attr;
-   // const computerSelection = computerPlay();
-   const computerSelection = "rock";
+   const computerSelection = computerPlay();
+   // const computerSelection = "rock";
    playRound(playerSelection, computerSelection);
 
 }
@@ -80,14 +80,11 @@ function game(e, computerScore, playerScore) {
 function roundWinner(unit) {
    if (unit === "computer") {
       computerScore++;
-      computerScoreWrapper.textContent = `Computer score:\
-      ${computerScore}`;
+      computerScoreWrapper.lastElementChild.textContent = computerScore;
    } else if (unit === "player") {
       playerScore++;
-      playerScoreWrapper.textContent = `Player score:\
-      ${playerScore}`;
+      playerScoreWrapper.lastElementChild.textContent = playerScore;
    }
-
 }
 
 // TO BE MERGED
@@ -102,7 +99,7 @@ function roundStatus(winner, loser) {
 }
 
 // Print the game status and description / TO BE MERGED
-function winLose(winner, computerSelection, playerSelection) {
+function winLose(winner, playerSelection, computerSelection) {
    if (winner === "computer") {
       roundResult.textContent = `YOU LOSE`;
       roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
@@ -117,30 +114,42 @@ function winLose(winner, computerSelection, playerSelection) {
       roundResult.textContent = "IT'S A TIE";
       roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} ties with ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
    }
+}
+
+function convertHands(playerSelection, computerSelection) {
+   let rock = "✊"
+   paper = "✋"
+   scissors = "✌️";
+   switch (playerSelection) {
+      case "rock":
+         playerHand.textContent = rock;
+         break;
+      case "paper":
+         playerHand.textContent = paper;
+         break;
+      case "scissors":
+         playerHand.textContent = scissors;
+         break;
+   }
+   switch (computerSelection) {
+      case "rock":
+         computerHand.textContent = rock;
+         break;
+      case "paper":
+         computerHand.textContent = paper;
+         break;
+      case "scissors":
+         computerHand.textContent = scissors;
+         break;
+   }
    
-   
-   // if (winner === "computer") {
-   //    roundResult.textContent = `YOU LOSE`;
-   //    roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
-   //    console.log(`winLose -> Computer Selection: ${computerSelection}`);
-   //    console.log(`winLose -> Player Selection: ${playerSelection}`);
-   // } else if (winner === "player") {
-   //    roundResult.textContent = "YOU WIN"
-   //    roundDesc.textContent = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)}.`;
-   //    console.log(`winLose -> Computer Selection: ${computerSelection}`);
-   //    console.log(`winLose -> Player Selection: ${playerSelection}`);
-   // } else if (winner === "tie") {
-   //    roundResult.textContent = "IT'S A TIE";
-   //    roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} ties with ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
-   // }
 }
 
 
 
-function getHand(computerSign, playerSign) {
+function getHand(playerSelection, computerSelection) {
    // Display each unit's hand
-   playerHand.textContent = playerSign;
-   computerHand.textContent = computerSign;
+   convertHands(playerSelection, computerSelection);
 }
 
 

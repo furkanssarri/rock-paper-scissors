@@ -27,7 +27,7 @@ body {
    text-align: center;
    background-color: #1d1d1d;
    color: #fff;
-   min-height: 74vh;
+   min-height: 79.1vh;
    padding-top: 5vh;
 }
 .container {
@@ -43,26 +43,61 @@ body {
 }
 
 .desc {
-   margin-bottom: 10vh;
+   margin-bottom: 7vh;
 }
 
 .hands {
    display: flex;
    justify-content: space-around;
    /* margin: 0 10vw; */
-   padding-bottom: 10vh;
+   padding-bottom: 7vh;
+}
+
+.hands :first-child {
+   font-size: 4em;
+}
+
+.hands :nth-child(2) {
+   font-size: 4em;
 }
 
 .scoreboard {
    display: flex;
    justify-content:space-around;
-   /* gap: 25px */
-   margin-bottom: 5vh;
+   margin-bottom: 3vh;
+}
+
+.buttons {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 25px;
+}
+
+.btn {
+   border-radius: 10px;
+}
+
+.game-button {
+   padding: 25px;
+   background-color: #424242;
+   border: none;
+   width: 150px;
+   height: 150px;
+   font-size: 5em;
+}
+
+.game-button:hover {
+   background-color: #565555;
+}
+
+.game-button:active {
+   background-color: #686666;
 }
 
 .footer{
    background-color: #141414;
-   padding: 5vh;
+   padding: 1.75vh;
    color: white;
    display: flex;
    justify-content: center;
