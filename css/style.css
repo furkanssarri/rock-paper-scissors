@@ -118,6 +118,7 @@ body {
    width: 150px;
    height: 150px;
    font-size: 5em;
+   cursor: pointer;
 }
 
 .game-button:hover {
