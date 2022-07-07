@@ -15,105 +15,10 @@ let computerScore = 0;
 
 eventListeners();
 
-
 function eventListeners() {
    buttonsArr.forEach(button => {
       button.addEventListener("click", game);
    });
-}
-
-
-// Let the computer select a random element from the elements array
-function computerPlay() {
-   return elements[Math.floor(Math.random() * elements.length)];
-}
-
-
-// Play one round of the game
-function playRound(playerSelection, computerSelection) { // Control the winners. Needs to be re-worked.
-   if (computerSelection === "rock" && playerSelection === "scissors"
-      || computerSelection === "scissors" && playerSelection === "paper"
-      || computerSelection === "paper" && playerSelection === "rock") {
-      console.log(`playRound -> Computer Selection: ${computerSelection}`);
-      console.log(`playRound -> Player Selection: ${playerSelection}`);
-      gameRound++; // TO BE MERGED
-      getHand(playerSelection, computerSelection); // TO BE MERGED
-      roundWinner("computer"); // TO BE MERGED
-      roundStatus(playerSelection, computerSelection); // TO BE MERGED
-      winLose("computer", playerSelection, computerSelection); // TO BE MERGED
-      // console.log(`You lose, ${computerSelection} beats ${playerSelection}`);
-   } else if (computerSelection === "scissors" && playerSelection === "rock"
-      || computerSelection === "paper" && playerSelection === "scissors"
-      || computerSelection === "rock" && playerSelection === "paper") {
-      console.log(`playRound -> Computer Selection: ${computerSelection}`);
-      console.log(`playRound -> Player Selection: ${playerSelection}`);
-      gameRound++; // TO BE MERGED
-      getHand(playerSelection, computerSelection); // TO BE MERGED
-      roundWinner("player"); // TO BE MERGED
-      roundStatus(playerSelection, computerSelection); // TO BE MERGED
-      winLose("player", playerSelection, computerSelection) // TO BE MERGED
-      // console.log(`You won, ${playerSelection} beats ${computerSelection}.`);
-   } else if (computerSelection === "rock" && playerSelection === "rock"
-      || computerSelection === "paper" && playerSelection === "paper"
-      || computerSelection === "scissors" && playerSelection === "scissors") {
-      gameRound++;
-      // console.log(`That's a tie. The computer selected ${computerSelection} and you selected ${playerSelection}.`);
-      getHand(playerSelection, computerSelection); // TO BE MERGED
-      roundStatus(playerSelection, computerSelection); // TO BE MERGED
-      winLose("tie", playerSelection, computerSelection); // TO BE MERGED
-   }
-}
-
-// Play a round of game
-
-function game(e, computerScore, playerScore) {
-   let attr = e.target.getAttribute("name");
-   const playerSelection = attr;
-   const computerSelection = computerPlay();
-   // const computerSelection = "rock";
-   playRound(playerSelection, computerSelection);
-
-}
-
-// Determine round winner and print / TO BE MERGED
-
-function roundWinner(unit) {
-   if (unit === "computer") {
-      computerScore++;
-      computerScoreWrapper.lastElementChild.textContent = computerScore;
-   } else if (unit === "player") {
-      playerScore++;
-      playerScoreWrapper.lastElementChild.textContent = playerScore;
-   }
-}
-
-// TO BE MERGED
-
-function roundStatus(winner, loser) {
-   if (computerScore !== playerScore) {
-      // console.log(`${winner} wins over ${loser}`);
-   } else {
-      console.log(`Tie`);
-   }
-   // console.log(gameRound);
-}
-
-// Print the game status and description / TO BE MERGED
-function winLose(winner, playerSelection, computerSelection) {
-   if (winner === "computer") {
-      roundResult.textContent = `YOU LOSE`;
-      roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
-      console.log(`winLose -> Computer Selection: ${computerSelection}`);
-      console.log(`winLose -> Player Selection: ${playerSelection}`);
-   } else if (winner === "player") {
-      roundResult.textContent = "YOU WIN"
-      roundDesc.textContent = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)}.`;
-      console.log(`winLose -> Computer Selection: ${computerSelection}`);
-      console.log(`winLose -> Player Selection: ${playerSelection}`);
-   } else if (winner === "tie") {
-      roundResult.textContent = "IT'S A TIE";
-      roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} ties with ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
-   }
 }
 
 function convertHands(playerSelection, computerSelection) {
@@ -142,15 +47,117 @@ function convertHands(playerSelection, computerSelection) {
          computerHand.textContent = scissors;
          break;
    }
-   
+
 }
 
+// computerSelection
+function computerPlay() {
+   return elements[Math.floor(Math.random() * elements.length)];
+}
 
+// Play a round of game
+function game(e) {
+   let attr = e.target.getAttribute("name");
+   const playerSelection = attr;
+   const computerSelection = computerPlay();
+   // const computerSelection = "rock";
+   playRound(playerSelection, computerSelection);
+}
 
-function getHand(playerSelection, computerSelection) {
-   // Display each unit's hand
+// Resolve round
+function playRound(playerSelection, computerSelection) { // Control the winners. Needs to be re-worked.
+   if (computerSelection === "rock" && playerSelection === "scissors"
+      || computerSelection === "scissors" && playerSelection === "paper"
+      || computerSelection === "paper" && playerSelection === "rock") {
+      gameRound++;
+      roundStatus("computer", playerSelection, computerSelection);
+   } else if (computerSelection === "scissors" && playerSelection === "rock"
+      || computerSelection === "paper" && playerSelection === "scissors"
+      || computerSelection === "rock" && playerSelection === "paper") {
+      gameRound++;
+      roundStatus("player", playerSelection, computerSelection);
+   } else if (computerSelection === "rock" && playerSelection === "rock"
+      || computerSelection === "paper" && playerSelection === "paper"
+      || computerSelection === "scissors" && playerSelection === "scissors") {
+      gameRound++;
+      roundStatus("tie", playerSelection, computerSelection);
+   }
+   countGame();
+}
+
+// Determine round winner and print 
+function roundStatus(winner, playerSelection, computerSelection) {
+   if (winner === "computer") {
+      roundResult.textContent = `YOU LOSE`;
+      roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
+      promptScore("computer");
+   } else if (winner === "player") {
+      roundResult.textContent = `YOU WIN`
+      roundDesc.textContent = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)}.`;
+      promptScore("player");
+   } else if (winner === "tie") {
+      roundResult.textContent = "IT'S A TIE";
+      roundDesc.textContent = `${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} ties with ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)}.`;
+   }
    convertHands(playerSelection, computerSelection);
+
 }
 
+// Prompt the scores
+function promptScore(unit) {
+   if (unit === "computer") {
+      computerScore++;
+      computerScoreWrapper.lastElementChild.textContent = computerScore;
+   } else if (unit === "player") {
+      playerScore++;
+      playerScoreWrapper.lastElementChild.textContent = playerScore;
+   } else if (unit === "reset") {
+      playerScore = 0;
+      computerScore = 0;
+      computerScoreWrapper.lastElementChild.textContent = computerScore;
+      playerScoreWrapper.lastElementChild.textContent = playerScore;
+   }
+}
 
+// Count and finalize the game
+function countGame() {
+   let descWrapper = document.querySelector(".desc-wrapper");
+   let restartButton = document.createElement("button");
+   restartButton.classList = "btn restart-button";
+   restartButton.textContent = "Play again";
+   let elems = document.getElementsByClassName("game-button");
+   if (playerScore == 5 || computerScore == 5) {
+      for (let i = 0; i < elems.length; i++) {
+         elems[i].disabled = true;
+      }
+      if (computerScore === 5 && playerScore < 5 ) {
+         roundResult.textContent = `GAME OVER`;
+         roundDesc.textContent = `Computer is victorious after ${gameRound} rounds.`;
+      } else if (playerScore === 5 && computerScore < 5) {
+         roundResult.textContent = `GAME OVER`;
+         roundDesc.textContent = `Player is victorious after ${gameRound} rounds.`;
+      } else {
+         roundResult.textContent = `ERROR`;
+         roundDesc.textContent = `There has been an error of some sort.`;
+      }
+      descWrapper.appendChild(restartButton);
+      restartButton.addEventListener("click", restartGame);
+   }
+}
 
+// Restart the game
+function restartGame(e) {
+   if (e.target.className = "restart-button") {
+      gameRound = 0;
+      promptScore("reset");
+      roundResult.textContent = "Make a selection";
+      roundDesc.textContent = "First to score 5 points wins the game";
+      let elems = document.getElementsByClassName("game-button");
+      for (let i = 0; i < elems.length; i++) {
+         elems[i].disabled = false;
+      }
+      let descWrapper = document.querySelector(".desc-wrapper");
+      let restartButton = document.querySelector(".restart-button");
+      descWrapper.removeChild(restartButton);
+   }
+}
